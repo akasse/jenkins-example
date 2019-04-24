@@ -18,7 +18,7 @@ pipeline {
         stage('Check Scm Changelog') {
           steps {
              echo 'Git Checkout'
-             git 'https://github.com/akasse/jenkins-example/edit/master/Jenkinsfile'
+             git 'https://github.com/akasse/jenkins-example'
           }
         }
         stage ('Clean Package') {
