@@ -6,36 +6,22 @@ pipeline {
     }
     
     environment {
-    MAVEN = tool name: 'Maven', type: 'maven'
+      MAVEN = tool name: 'Maven', type: 'maven'
+      MVN = ${MAVEN}/bin/mvn
     }
 
     stages {
         stage ('Compile Stage') {
-             
             steps {
-                
-                    sh '${MAVEN}/bin/mvn clean compile'
-               
+                 sh '${MVN} clean compile'
             }
         }
-
         stage ('Testing Stage') {
-           
             steps {
-           
-                    sh '${MAVEN}/bin/mvn test'
-              
-            }
-        }
-
-
-        stage ('Deployment Stage') {
-            
-            steps {
-                
-                    sh '${MAVEN}/bin/mvn deploy'
-                
+                    sh '${MVN} test'
             }
         }
     }
+    
+    
 }
