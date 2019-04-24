@@ -24,7 +24,7 @@ pipeline {
         stage('Check Scm Changelog') {
           steps {
              echo 'Git Checkout'
-             git 'https://github.com/akasse/jenkins-example'
+              checkout scm
           }
         }
         stage ('Clean Package') {
