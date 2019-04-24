@@ -5,12 +5,21 @@ pipeline {
      timeout(time: 120, unit: 'MINUTES')
     }
     
+    def mvnBuild() {
+     mvn: ${MAVEN}/bin/mvn
+    }
+    
     environment {
       MAVEN = tool name: 'Maven', type: 'maven'
-      MVN = ${MAVEN}/bin/mvn
+      MVN = mvnBuild().mvn
     }
+    
+    
 
     stages {
+        stage('SCM Checkou') {
+             git 'https://github.com/akasse/jenkins-example/edit/master/Jenkinsfile'
+        }
         stage ('Compile Stage') {
             steps {
                  sh '${MVN} clean compile'
@@ -22,6 +31,8 @@ pipeline {
             }
         }
     }
+    
+    
     
     
 }
