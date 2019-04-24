@@ -1,32 +1,40 @@
 pipeline {
     agent any
+    
+    options {
+     timeout(time: 120, unit: 'MINUTES')
+    }
+    
+    environment {
+    MAVEN = tool name: 'Maven', type: 'maven'
+    }
 
     stages {
         stage ('Compile Stage') {
-             def mvnHome = tool name: 'Maven', type: 'maven'
+             
             steps {
-                withMaven(maven : 'maven_3_5_0') {
-                    sh '${mvnHome}/bin/mvn clean compile'
-                }
+                
+                    sh '${MAVEN}/bin/mvn clean compile'
+               
             }
         }
 
         stage ('Testing Stage') {
-            def mvnHome = tool name: 'Maven', type: 'maven'
+           
             steps {
-                withMaven(maven : 'maven_3_5_0') {
-                    sh '${mvnHome}/bin/mvn test'
-                }
+           
+                    sh '${MAVEN}/bin/mvn test'
+              
             }
         }
 
 
         stage ('Deployment Stage') {
-            def mvnHome = tool name: 'Maven', type: 'maven'
+            
             steps {
-                withMaven(maven : 'maven_3_5_0') {
-                    sh '${mvnHome}/bin/mvn deploy'
-                }
+                
+                    sh '${MAVEN}/bin/mvn deploy'
+                
             }
         }
     }
