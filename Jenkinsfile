@@ -19,17 +19,19 @@ pipeline {
     
 
     stages {
-        stage('SCM Checkou') {
+        stage('Check Scm Changelog') {
+          steps {
              git 'https://github.com/akasse/jenkins-example/edit/master/Jenkinsfile'
+          }
         }
-        stage ('Compile Stage') {
+        stage ('Clean Package') {
             steps {
-                 sh '${MVN} clean compile'
+                 sh '${MVN} clean package'
             }
         }
-        stage ('Testing Stage') {
+        stage ('Unit tests') {
             steps {
-                    sh '${MVN} test'
+                    sh '${MVN} clean test'
             }
         }
     }
