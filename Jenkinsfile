@@ -1,6 +1,3 @@
- def mvnBuild() {
-     mvn: ${MAVEN}/bin/mvn
-    }
 
 pipeline {
     agent any
@@ -13,7 +10,6 @@ pipeline {
     
     environment {
       MAVEN = tool name: 'Maven', type: 'maven'
-      MVN = mvnBuild().mvn
     }
     
     
@@ -21,18 +17,26 @@ pipeline {
     stages {
         stage('Check Scm Changelog') {
           steps {
+             echo 'Git Checkout'
              git 'https://github.com/akasse/jenkins-example/edit/master/Jenkinsfile'
           }
         }
         stage ('Clean Package') {
             steps {
-                 sh '${MVN} clean package'
+                 sh '${MAVEN}/bin/mvn clean package'
             }
         }
         stage ('Unit tests') {
+         
             steps {
-                    sh '${MVN} clean test'
+                 sh '${MAVEN}/bin/mvn clean test'
             }
+         
+            post {
+               success {
+                 echo 'Unit tests execution finished'
+               }
+           }
         }
     }
     
