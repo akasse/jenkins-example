@@ -1,3 +1,7 @@
+ def mvnBuild() {
+     mvn: ${MAVEN}/bin/mvn
+    }
+
 pipeline {
     agent any
     
@@ -5,9 +9,7 @@ pipeline {
      timeout(time: 120, unit: 'MINUTES')
     }
     
-    def mvnBuild() {
-     mvn: ${MAVEN}/bin/mvn
-    }
+   
     
     environment {
       MAVEN = tool name: 'Maven', type: 'maven'
